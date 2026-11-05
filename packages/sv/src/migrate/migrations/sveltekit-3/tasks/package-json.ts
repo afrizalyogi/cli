@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { isVersionUnsupportedBelow, loadPackageJson } from '@sveltejs/sv-utils';
 import { defineMigrationTask } from '../../../index.ts';
 
@@ -37,5 +39,9 @@ export default defineMigrationTask({
 		for (const name of Object.keys(dependencies)) {
 			if (ADAPTERS[name]) sv.devDependency(name, ADAPTERS[name]);
 		}
+
+		// Kit 2's generated files (e.g. `.svelte-kit/tsconfig.json`) are stale under Kit 3, which
+		// regenerates the directory on the next sync.
+		fs.rmSync(path.join(cwd, '.svelte-kit'), { recursive: true, force: true });
 	}
 });
