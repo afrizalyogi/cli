@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - 'ci/**'
+      - 'ci/**' # temp
     paths-ignore: &paths_ignore
       - '.changeset/**'
       - '.github/FUNDING.yml'
